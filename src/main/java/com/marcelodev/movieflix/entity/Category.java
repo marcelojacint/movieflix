@@ -18,4 +18,7 @@ public class Category {
 
     @Column(length = 100, nullable = false)
     private String name;
+
+    @Column(length = 1000, nullable = false)
+    private String description;
 }
