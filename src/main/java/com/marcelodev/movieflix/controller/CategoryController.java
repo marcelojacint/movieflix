@@ -7,6 +7,7 @@ import com.marcelodev.movieflix.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,5 +25,12 @@ public class CategoryController {
         List<CategoryResponse> categoryResponses = categoryService.findAll()
                 .stream().map(CategoryMapper::toCategoryResponse).toList();
         return ResponseEntity.ok(categoryResponses);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CategoryResponse> findById(@PathVariable Long id) {
+             return categoryService.findById(id)
+                     .map(category -> ResponseEntity.ok(CategoryMapper.toCategoryResponse(category)))
+                     .orElse(ResponseEntity.notFound().build());
     }
 }
