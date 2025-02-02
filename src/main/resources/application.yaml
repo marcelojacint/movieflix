@@ -3,7 +3,7 @@ spring:
     name: movieflix
 
   datasource:
-    url: jdbc:postgresql://<172.18.0.1>:5432/movieflix
+    url: jdbc:postgresql://host.docker.internal:5432/movieflix
     username: postgres
     password: 123
     driver-class-name: org.postgresql.Driver
@@ -14,3 +14,7 @@ spring:
 
   flyway:
     enabled: true
+
+server:
+  port: 8081
+

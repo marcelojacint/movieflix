@@ -6,7 +6,9 @@ import com.marcelodev.movieflix.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -20,5 +22,13 @@ public class CategoryService {
             throw new CategoryException("there are no categories");
         }
         return categories;
+    }
+
+    public Optional<Category> findById(Long id) {
+        if  (!categoryRepository.existsById(id)) {
+            throw new CategoryException("there are no categories");
+        }
+        return categoryRepository.findById(id);
+
     }
 }
