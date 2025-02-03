@@ -44,4 +44,11 @@ public class CategoryService {
                 })
                 .orElseThrow(() -> new CategoryException("category not found!"));
     }
+
+    public void delete(Long categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
+            throw new CategoryException("category not found!");
+        }
+        categoryRepository.deleteById(categoryId);
+    }
 }
