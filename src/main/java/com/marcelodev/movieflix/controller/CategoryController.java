@@ -39,4 +39,10 @@ public class CategoryController {
        CategoryResponse categoryResponse = CategoryMapper.toCategoryResponse( categoryService.create(CategoryMapper.toCategory(categoryRequest)));
         return ResponseEntity.status(HttpStatus.CREATED).body(categoryResponse);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody CategoryRequest categoryRequest) {
+        Category updateCategory = categoryService.update(id, CategoryMapper.toCategory(categoryRequest));
+        return ResponseEntity.ok(CategoryMapper.toCategoryResponse(updateCategory));
+        
+    }
 }

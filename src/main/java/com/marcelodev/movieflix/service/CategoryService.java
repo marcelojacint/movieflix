@@ -25,7 +25,7 @@ public class CategoryService {
     }
 
     public Optional<Category> findById(Long id) {
-        if  (!categoryRepository.existsById(id)) {
+        if (!categoryRepository.existsById(id)) {
             throw new CategoryException("there are no categories");
         }
         return categoryRepository.findById(id);
@@ -34,5 +34,14 @@ public class CategoryService {
 
     public Category create(Category category) {
         return categoryRepository.save(category);
-            }
+    }
+
+    public Category update(Long categoryId, Category category) {
+        return categoryRepository.findById(categoryId).map(existingCategory -> {
+                    existingCategory.setName(category.getName());
+                    existingCategory.setDescription(category.getDescription());
+                    return categoryRepository.save(existingCategory);
+                })
+                .orElseThrow(() -> new CategoryException("category not found!"));
+    }
 }
