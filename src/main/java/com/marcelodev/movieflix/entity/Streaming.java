@@ -3,6 +3,8 @@ package com.marcelodev.movieflix.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,7 +12,8 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "streaming")
-public class Streaming {
+public class Streaming implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
