@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.w3c.dom.stylesheets.LinkStyle;
@@ -23,10 +24,17 @@ public class StreamingController {
     private final StreamingService streamingService;
 
     @GetMapping
-   public ResponseEntity<List<StreamingResponse>> findAll() {
+    public ResponseEntity<List<StreamingResponse>> findAll() {
         List<StreamingResponse> streamingResponses = streamingService.findAll()
                 .stream()
                 .map(StreamingMapper::toStreamingResponse).toList();
         return ResponseEntity.ok(streamingResponses);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<StreamingResponse> findById(@PathVariable Long id) {
+        return streamingService.findById(id)
+                .map(streaming -> ResponseEntity.ok(StreamingMapper
+                        .toStreamingResponse(streaming))).orElse(ResponseEntity.notFound().build());
     }
 }
