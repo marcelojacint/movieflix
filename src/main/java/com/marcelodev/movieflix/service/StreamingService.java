@@ -29,4 +29,11 @@ public class StreamingService {
         return streamingRepository.findById(id);
     }
 
+    public Streaming save(Streaming streaming) {
+        if (!streamingRepository.existsById(streaming.getId())) {
+            throw new StreamingException("No streaming found");
+        }
+        return streamingRepository.save(streaming);
+    }
+
 }
