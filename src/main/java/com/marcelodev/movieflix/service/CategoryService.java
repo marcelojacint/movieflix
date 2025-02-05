@@ -32,7 +32,10 @@ public class CategoryService {
 
     }
 
-    public Category create(Category category) {
+    public Category save(Category category) {
+        if (!categoryRepository.existsById(category.getId())) {
+            throw new CategoryException("there are no categories");
+        }
         return categoryRepository.save(category);
     }
 

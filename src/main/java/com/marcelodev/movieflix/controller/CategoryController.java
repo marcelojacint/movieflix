@@ -29,22 +29,25 @@ public class CategoryController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> findById(@PathVariable Long id) {
-             return categoryService.findById(id)
-                     .map(category -> ResponseEntity.ok(CategoryMapper.toCategoryResponse(category)))
-                     .orElse(ResponseEntity.notFound().build());
+        return categoryService.findById(id)
+                .map(category -> ResponseEntity.ok(CategoryMapper.toCategoryResponse(category)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<CategoryResponse> save(@RequestBody CategoryRequest categoryRequest) {
-       CategoryResponse categoryResponse = CategoryMapper.toCategoryResponse( categoryService.create(CategoryMapper.toCategory(categoryRequest)));
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryResponse);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(CategoryMapper.toCategoryResponse(categoryService
+                        .create(CategoryMapper.toCategory(categoryRequest))));
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @RequestBody CategoryRequest categoryRequest) {
         Category updateCategory = categoryService.update(id, CategoryMapper.toCategory(categoryRequest));
         return ResponseEntity.ok(CategoryMapper.toCategoryResponse(updateCategory));
-        
+
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         categoryService.delete(id);
