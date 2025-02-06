@@ -45,4 +45,10 @@ public class StreamingController {
                         .save(StreamingMapper.toStreaming(streamingRequest
                         ))));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        streamingService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }

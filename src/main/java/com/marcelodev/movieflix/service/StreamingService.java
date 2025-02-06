@@ -44,4 +44,11 @@ public class StreamingService {
                 .orElseThrow(() -> new StreamingException("No streaming found"));
     }
 
+    public void delete(Long streamingId) {
+        if (!streamingRepository.existsById(streamingId)) {
+            throw new StreamingException("No streaming found");
+        }
+        streamingRepository.deleteById(streamingId);
+    }
+
 }
