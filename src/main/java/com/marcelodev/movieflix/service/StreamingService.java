@@ -16,10 +16,10 @@ public class StreamingService {
     private StreamingRepository streamingRepository;
 
     public List<Streaming> findAll() {
-         if(streamingRepository.findAll().isEmpty()) {
-             throw new StreamingException("No streaming found");
-         }
-         return streamingRepository.findAll();
+        if (streamingRepository.findAll().isEmpty()) {
+            throw new StreamingException("No streaming found");
+        }
+        return streamingRepository.findAll();
     }
 
     public Optional<Streaming> findById(Long id) {
@@ -34,6 +34,14 @@ public class StreamingService {
             throw new StreamingException("No streaming found");
         }
         return streamingRepository.save(streaming);
+    }
+
+    public Streaming update(Long streamingId, Streaming streaming) {
+       return streamingRepository.findById(streamingId).map(existingStreaming -> {
+                    existingStreaming.setName(streaming.getName());
+                    return streamingRepository.save(existingStreaming);
+                })
+                .orElseThrow(() -> new StreamingException("No streaming found"));
     }
 
 }
