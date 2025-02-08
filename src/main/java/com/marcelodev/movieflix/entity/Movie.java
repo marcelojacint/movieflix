@@ -2,6 +2,8 @@ package com.marcelodev.movieflix.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -21,6 +23,7 @@ public class Movie implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 255, nullable = false)
     private String title;
 
     private String description;
@@ -30,9 +33,11 @@ public class Movie implements Serializable {
 
     private Double rating;
 
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     @Column(name = "udpate_at")
     private LocalDateTime updateAt;
 }
