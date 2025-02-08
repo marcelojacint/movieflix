@@ -23,8 +23,12 @@ public class Movie implements Serializable {
 
     private String title;
 
+    private String description;
+
     @Column(name = "release_date")
     private LocalDate releaseDate;
+
+    private Double rating;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
