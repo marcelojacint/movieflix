@@ -1,14 +1,14 @@
 package com.marcelodev.movieflix.controller;
 
+import com.marcelodev.movieflix.controller.request.MovieRequest;
 import com.marcelodev.movieflix.controller.response.MovieResponse;
+import com.marcelodev.movieflix.entity.Movie;
 import com.marcelodev.movieflix.mapper.MovieMapper;
 import com.marcelodev.movieflix.service.MovieService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,4 +33,10 @@ public class MovieController {
               .map(movie -> ResponseEntity.ok(MovieMapper.toMovieResponse(movie)))
               .orElse(ResponseEntity.notFound().build());
     }
+
+   @PostMapping
+    public ResponseEntity<MovieResponse> save(@RequestBody MovieRequest movieRequest) {
+       MovieResponse movieResponse = MovieMapper.toMovieResponse(movieService.save(MovieMapper.toMovie(movieRequest)));
+       return ResponseEntity.status(HttpStatus.CREATED).body(movieResponse);
+   }
 }

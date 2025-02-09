@@ -17,17 +17,24 @@ public class MovieService {
     private MovieRepository movieRepository;
 
     public List<Movie> findAll() {
-        if(movieRepository.findAll().isEmpty()) {
+        if (movieRepository.findAll().isEmpty()) {
             throw new MovieException("No movies found");
         }
         return movieRepository.findAll();
     }
 
     public Optional<Movie> findById(Long id) {
-        if(!movieRepository.existsById(id)) {
+        if (!movieRepository.existsById(id)) {
             throw new MovieException("Movie not found");
         }
         return movieRepository.findById(id);
+    }
+
+    public Movie save(Movie movie) {
+        if (!movieRepository.existsById(movie.getId())) {
+            throw new MovieException("Movie not found");
+        }
+        return movieRepository.save(movie);
     }
 
 }
