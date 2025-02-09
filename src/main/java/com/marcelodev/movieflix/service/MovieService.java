@@ -1,5 +1,6 @@
 package com.marcelodev.movieflix.service;
 
+import com.marcelodev.movieflix.entity.Category;
 import com.marcelodev.movieflix.entity.Movie;
 import com.marcelodev.movieflix.exception.MovieException;
 import com.marcelodev.movieflix.exception.StreamingException;
@@ -7,6 +8,7 @@ import com.marcelodev.movieflix.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,7 @@ import java.util.Optional;
 public class MovieService {
 
     private MovieRepository movieRepository;
+    private CategoryService categoryService;
 
     public List<Movie> findAll() {
         if (movieRepository.findAll().isEmpty()) {
@@ -34,6 +37,7 @@ public class MovieService {
         if (!movieRepository.existsById(movie.getId())) {
             throw new MovieException("Movie not found");
         }
+        movie.setCategories(this.findCategories(movie.getCategories()));
         return movieRepository.save(movie);
     }
 
@@ -54,6 +58,14 @@ public class MovieService {
             throw new MovieException("Movie not found");
         }
         movieRepository.deleteById(id);
+    }
+
+    private List<Category> findCategories(List<Category> categories) {
+        List<Category> categoriesList = new ArrayList<>();
+        for (Category category : categories) {
+            categoryService.findById(category.getId()).ifPresent(categoriesList::add);
+        }
+        return categoriesList;
     }
 
 }
