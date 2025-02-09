@@ -39,4 +39,10 @@ public class MovieController {
        MovieResponse movieResponse = MovieMapper.toMovieResponse(movieService.save(MovieMapper.toMovie(movieRequest)));
        return ResponseEntity.status(HttpStatus.CREATED).body(movieResponse);
    }
+
+   @PutMapping("/{id}")
+    public ResponseEntity<MovieResponse> update(@PathVariable Long id, @RequestBody MovieRequest movieRequest) {
+       MovieResponse movieResponse = MovieMapper.toMovieResponse(movieService.update(id, MovieMapper.toMovie(movieRequest)));
+       return ResponseEntity.ok(movieResponse);
+   }
 }

@@ -37,4 +37,16 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
+    public Movie update(Long id, Movie movie) {
+        Optional<Movie> optMovie = movieRepository.findById(id);
+        return optMovie.map(existingMovie -> {
+                    existingMovie.setTitle(movie.getTitle());
+                    existingMovie.setDescription(movie.getDescription());
+                    existingMovie.setReleaseDate(movie.getReleaseDate());
+                    existingMovie.setRating(movie.getRating());
+                    return movieRepository.save(existingMovie);
+                })
+                .orElseThrow(() -> new MovieException("Movie not found"));
+    }
+
 }

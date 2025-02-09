@@ -37,8 +37,7 @@ public class CategoryController {
     @PostMapping
     public ResponseEntity<CategoryResponse> save(@RequestBody CategoryRequest categoryRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(CategoryMapper.toCategoryResponse(categoryService
-                        .create(CategoryMapper.toCategory(categoryRequest))));
+                .body(CategoryMapper.toCategoryResponse(categoryService.save(CategoryMapper.toCategory(categoryRequest))));
     }
 
     @PutMapping("/{id}")
