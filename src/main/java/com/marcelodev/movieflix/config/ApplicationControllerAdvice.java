@@ -1,6 +1,7 @@
 package com.marcelodev.movieflix.config;
 
 import com.marcelodev.movieflix.exception.CategoryException;
+import com.marcelodev.movieflix.exception.MovieException;
 import com.marcelodev.movieflix.exception.StreamingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,10 +14,14 @@ import java.util.Map;
 
 @ControllerAdvice
 public class ApplicationControllerAdvice {
-    
+
+    @ExceptionHandler(MovieException.class)
+    public ResponseEntity<Object> handleMovieNotFound(MovieException ex) {
+        return getObjectResponseEntity(ex.getMessage(), ex);
+    }
+
     @ExceptionHandler(CategoryException.class)
     public ResponseEntity<Object> handleCategoryNotFound(CategoryException ex) {
-
         return getObjectResponseEntity(ex.getMessage(), ex);
     }
 
