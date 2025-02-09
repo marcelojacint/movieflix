@@ -45,4 +45,10 @@ public class MovieController {
        MovieResponse movieResponse = MovieMapper.toMovieResponse(movieService.update(id, MovieMapper.toMovie(movieRequest)));
        return ResponseEntity.ok(movieResponse);
    }
+
+   @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        movieService.delete(id);
+        return ResponseEntity.noContent().build();
+   }
 }

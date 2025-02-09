@@ -49,4 +49,11 @@ public class MovieService {
                 .orElseThrow(() -> new MovieException("Movie not found"));
     }
 
+    public void delete(Long id) {
+        if (!movieRepository.existsById(id)) {
+            throw new MovieException("Movie not found");
+        }
+        movieRepository.deleteById(id);
+    }
+
 }
