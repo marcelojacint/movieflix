@@ -2,6 +2,7 @@ package com.marcelodev.movieflix.service;
 
 import com.marcelodev.movieflix.entity.Category;
 import com.marcelodev.movieflix.entity.Movie;
+import com.marcelodev.movieflix.entity.Streaming;
 import com.marcelodev.movieflix.exception.MovieException;
 import com.marcelodev.movieflix.exception.StreamingException;
 import com.marcelodev.movieflix.repository.MovieRepository;
@@ -18,6 +19,7 @@ public class MovieService {
 
     private MovieRepository movieRepository;
     private CategoryService categoryService;
+    private StreamingService streamingService;
 
     public List<Movie> findAll() {
         if (movieRepository.findAll().isEmpty()) {
@@ -38,6 +40,7 @@ public class MovieService {
             throw new MovieException("Movie not found");
         }
         movie.setCategories(this.findCategories(movie.getCategories()));
+        movie.setStreamings(this.findStreamings(movie.getStreamings()));
         return movieRepository.save(movie);
     }
 
@@ -66,6 +69,14 @@ public class MovieService {
             categoryService.findById(category.getId()).ifPresent(categoriesList::add);
         }
         return categoriesList;
+    }
+
+    private List<Streaming> findStreamings(List<Streaming> streamings) {
+        List<Streaming> streamingsList = new ArrayList<>();
+        for (Streaming streaming : streamings) {
+            streamingService.findById(streaming.getId()).ifPresent(streamingsList::add);
+        }
+        return streamingsList;
     }
 
 }
