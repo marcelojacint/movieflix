@@ -34,11 +34,21 @@ public class MovieController {
               .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieResponse>> findByCategory(@RequestParam Long id){
+        List<MovieResponse> MovieResponses = movieService.findByCategory(id).stream()
+                .map(MovieMapper::toMovieResponse).toList();
+        return ResponseEntity.ok(MovieResponses);
+
+    }
+
    @PostMapping
    public ResponseEntity<MovieResponse> save(@RequestBody MovieRequest movieRequest) {
        MovieResponse movieResponse = MovieMapper.toMovieResponse(movieService.save(MovieMapper.toMovie(movieRequest)));
        return ResponseEntity.status(HttpStatus.CREATED).body(movieResponse);
    }
+
+
 
    @PutMapping("/{id}")
     public ResponseEntity<MovieResponse> update(@PathVariable Long id, @RequestBody MovieRequest movieRequest) {
