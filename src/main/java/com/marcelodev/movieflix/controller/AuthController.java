@@ -23,4 +23,12 @@ public class AuthController {
                 .status(HttpStatus.CREATED).body(UserMapper.toUserResponse(userService.save(UserMapper.toUser(request))));
 
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody UserRequest request) {
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED).body(UserMapper.toUserResponse(userService.save(UserMapper.toUser(request))));
+
+    }
 }
